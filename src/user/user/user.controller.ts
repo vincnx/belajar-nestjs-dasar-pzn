@@ -1,3 +1,4 @@
+import { Connection } from './../connection/connection';
 import {
   Controller,
   Get,
@@ -16,8 +17,15 @@ import { UserService } from './user.service';
 
 @Controller('/api/users')
 export class UserController {
-  constructor(private service: UserService) {}
+  constructor(
+    private service: UserService,
+    private connection: Connection,
+  ) { }
 
+  @Get('connection')
+  async getConnection(): Promise<string> {
+    return this.connection.getName();
+  }
   @Get('hello')
   async sayHello(@Query('name') name: string): Promise<string> {
     return this.service.sayHello(name);
