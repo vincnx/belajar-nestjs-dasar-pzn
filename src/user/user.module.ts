@@ -26,10 +26,14 @@ import {
       useValue: mailService,
     },
     {
+      provide: 'EmailService',
+      useExisting: MailService,
+    },
+    {
       provide: UserRepository,
       useFactory: createUserRepository,
       inject: [Connection],
     },
   ],
 })
-export class UserModule {}
+export class UserModule { }
