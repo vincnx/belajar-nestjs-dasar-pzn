@@ -1,3 +1,4 @@
+import { MailService } from './../mail/mail.service';
 import { Connection } from './../connection/connection';
 import {
   Controller,
@@ -20,10 +21,12 @@ export class UserController {
   constructor(
     private service: UserService,
     private connection: Connection,
+    private mailService: MailService,
   ) { }
 
   @Get('connection')
   async getConnection(): Promise<string> {
+    this.mailService.send();
     return this.connection.getName();
   }
   @Get('hello')
