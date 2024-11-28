@@ -15,6 +15,14 @@ import { Request, Response } from 'express';
 
 @Controller('/api/users')
 export class UserController {
+  @Get('/view/hello')
+  viewHello(@Query('name') name: string, @Res() response: Response) {
+    response.render('index.html', {
+      title: 'template engine',
+      name: name,
+    });
+  }
+
   @Get('sample-response')
   @Header('Content-Type', 'Application/json')
   @HttpCode(200)
