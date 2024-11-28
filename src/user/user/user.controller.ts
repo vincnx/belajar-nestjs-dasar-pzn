@@ -12,9 +12,17 @@ import {
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { UserService } from './user.service';
 
 @Controller('/api/users')
 export class UserController {
+  constructor(private service: UserService) {}
+
+  @Get('hello')
+  async sayHello(@Query('name') name: string): Promise<string> {
+    return this.service.sayHello(name);
+  }
+
   @Get('/view/hello')
   viewHello(@Query('name') name: string, @Res() response: Response) {
     response.render('index.html', {
@@ -41,14 +49,6 @@ export class UserController {
   @Get('/get-cookie')
   getCookie(@Req() request: Request): string {
     return request.cookies['name'];
-  }
-
-  @Get('hello')
-  async sayHello(
-    @Query('first_name') firstName: string,
-    @Query('last_name') lastName: string,
-  ): Promise<string> {
-    return `Hello ${firstName} ${lastName}`;
   }
 
   @Get('redirect')
